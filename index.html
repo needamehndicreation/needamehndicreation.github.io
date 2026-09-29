@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mehndi Designs Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Rozha+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EEF1E4; --ink:#26311A; --muted:#66705a; --leaf:#3F5A24; --marigold:#E3A21A;
+  --line:#cfd6bf; --tile:#e1e6d0; --on-accent:#26311A;
+  --display:'Rozha One',Georgia,serif; --body:'Figtree',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#141B0E; --ink:#E9EDD9; --muted:#9aa58a; --leaf:#9DC46A; --line:#2c3820; --tile:#1e2816}
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:5rem}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.55 var(--body);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center;
+  max-width:1200px;margin:0 auto;padding:3rem 1.25rem 2rem}
+.hero h1{font:400 clamp(2.6rem,7vw,5.2rem)/1 var(--display);margin:0 0 1rem;letter-spacing:-.01em}
+.hero p{max-width:34ch;margin:0;color:var(--muted);font-size:1.1rem}
+.vine{width:100%;max-width:280px;justify-self:center;color:var(--leaf)}
+.vine path{fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;animation:draw 3.2s cubic-bezier(.5,0,.2,1) forwards}
+.vine path:nth-child(2){animation-delay:.6s}.vine path:nth-child(3){animation-delay:1.1s}
+.vine path:nth-child(4){animation-delay:1.5s}
+.vine circle{fill:var(--marigold);opacity:0;animation:pop .5s 2.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes pop{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.vine path{animation:none;stroke-dashoffset:0}.vine circle{animation:none;opacity:1}}
+@media (max-width:700px){.hero{grid-template-columns:1fr;padding-top:2rem}.vine{max-width:150px;justify-self:start;order:-1}}
+
+/* toolbar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);
+  border-block:1px solid var(--line);padding:.7rem 0}
+.bar-in{max-width:1200px;margin:0 auto;padding:0 1.25rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.chips{display:flex;gap:.4rem;overflow-x:auto;flex:1 1 320px;scrollbar-width:none;padding:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;border:1px solid var(--line);background:transparent;border-radius:999px;
+  padding:.35rem .85rem;cursor:pointer;font-weight:500}
+.chip small{color:var(--muted);margin-left:.3rem}
+.chip[aria-pressed=true]{background:var(--leaf);border-color:var(--leaf);color:var(--paper)}
+.chip[aria-pressed=true] small{color:inherit;opacity:.8}
+.search{flex:0 1 220px;border:1px solid var(--line);background:transparent;border-radius:999px;padding:.4rem .9rem}
+.search::placeholder{color:var(--muted)}
+
+/* grid */
+main{max-width:1200px;margin:0 auto;padding:1.5rem 1.25rem 4rem}
+.count{color:var(--muted);margin:0 0 1rem;font-size:.95rem}
+.grid{columns:4 220px;column-gap:1rem}
+figure{margin:0 0 1rem;break-inside:avoid;position:relative;border-radius:14px;overflow:hidden;background:var(--tile)}
+.tile{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;min-height:120px}
+.tile img{display:block;width:100%;height:auto;opacity:0;transition:opacity .4s,transform .5s}
+.tile img.ok{opacity:1}
+.tile:hover img{transform:scale(1.03)}
+.heart{position:absolute;top:.5rem;right:.5rem;width:2.25rem;height:2.25rem;border-radius:50%;border:0;
+  background:rgba(20,27,14,.55);color:#fff;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px)}
+.heart svg,.icon svg{width:1.15rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:2}
+.heart[aria-pressed=true] svg,.icon[aria-pressed=true] svg{fill:var(--marigold);stroke:var(--marigold)}
+figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.5rem .8rem .55rem;font-size:.85rem;color:#fff;
+  background:linear-gradient(transparent,rgba(20,27,14,.75));opacity:0;transition:opacity .25s;pointer-events:none}
+figure:hover figcaption,figure:focus-within figcaption{opacity:1}
+@media (hover:none){figcaption{opacity:1}}
+.msg{padding:3rem 0;max-width:46ch}
+.msg h2{font:400 1.8rem var(--display);margin:0 0 .5rem}
+.msg p{color:var(--muted);margin:.25rem 0 1rem}
+.btn{border:1px solid var(--ink);background:none;border-radius:999px;padding:.45rem 1.1rem;cursor:pointer;font-weight:500}
+.skel{height:220px;border-radius:14px;background:var(--tile);margin-bottom:1rem;break-inside:avoid}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh;width:100%;height:100%;color:#fff}
+dialog::backdrop{background:rgba(12,16,8,.94)}
+.lb{height:100%;display:grid;grid-template-rows:auto 1fr auto;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+.lb-top,.lb-bot{display:flex;align-items:center;gap:.5rem;padding:.75rem 1rem}
+.lb-top{justify-content:space-between}
+.lb-bot{justify-content:center;flex-wrap:wrap}
+.lb-title{font:400 1.2rem var(--display);margin:0}
+.lb-stage{position:relative;display:grid;place-items:center;min-height:0;padding:0 3.5rem}
+.lb-stage img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.icon{width:2.6rem;height:2.6rem;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);
+  color:#fff;cursor:pointer;display:grid;place-items:center}
+.nav{position:absolute;top:50%;transform:translateY(-50%)}
+.nav.prev{left:.5rem}.nav.next{right:.5rem}
+.pill{border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:.45rem 1rem;cursor:pointer;text-decoration:none}
+.pill:hover,.icon:hover{background:rgba(255,255,255,.18)}
+@media (max-width:600px){.lb-stage{padding:0 .5rem}.nav{top:auto;bottom:.5rem;transform:none}}
+.toast{position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);background:var(--ink);color:var(--paper);
+  padding:.5rem 1rem;border-radius:999px;z-index:20;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <h1>Mehndi designs</h1>
+    <p>Browse the collection by style, save your favourites, and open any design full screen.</p>
+  </div>
+  <svg class="vine" viewBox="0 0 200 200" aria-hidden="true">
+    <path pathLength="1" d="M20 192C20 125 105 142 100 82S62 30 112 16"/>
+    <path pathLength="1" d="M138 62C192 60 194 142 130 152C88 158 88 110 120 105C142 102 150 126 132 131"/>
+    <path pathLength="1" d="M100 84C132 72 152 92 142 112"/>
+    <path pathLength="1" d="M60 144C30 132 20 100 42 88"/>
+    <circle cx="112" cy="16" r="4"/><circle cx="42" cy="88" r="3.5"/><circle cx="132" cy="131" r="3.5"/><circle cx="142" cy="112" r="3"/>
+  </svg>
+</header>
+
+<div class="bar"><div class="bar-in">
+  <div class="chips" id="chips" role="group" aria-label="Filter by style"></div>
+  <input class="search" id="q" type="search" placeholder="Search designs" aria-label="Search designs">
+</div></div>
+
+<main>
+  <p class="count" id="count" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+</main>
+
+<dialog id="lb" aria-label="Design viewer">
+  <div class="lb">
+    <div class="lb-top">
+      <h2 class="lb-title" id="lbTitle"></h2>
+      <button class="icon" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+    <div class="lb-stage" id="stage">
+      <button class="icon nav prev" id="prev" aria-label="Previous design"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <img id="lbImg" alt="">
+      <button class="icon nav next" id="next" aria-label="Next design"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="lb-bot">
+      <button class="pill" id="lbSave" aria-pressed="false">Save</button>
+      <button class="pill" id="lbDl">Download</button>
+      <button class="pill" id="lbShare">Copy link</button>
+    </div>
+  </div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ================= CONFIG: edit these ================= */
+const CONFIG = {
+  user:   '',          // your GitHub username. Leave empty to preview with sample designs.
+  repo:   '',          // repository that holds the photos
+  branch: 'main',
+  folder: 'images',    // photos live in images/<style>/<photo>.jpg  (subfolders become styles)
+  manifest: ''         // leave empty: the page reads your folders live from GitHub on every reload.
+};
+/* ====================================================== */
+
+const IMG_RE = /\.(jpe?g|png|webp|gif|avif)$/i;
+const $ = s => document.querySelector(s);
+let items = [], view = [], cat = 'All', query = '', cur = -1;
+let favs = new Set();
+try { favs = new Set(JSON.parse(localStorage.getItem('mehndi-favs') || '[]')); } catch (e) {}
+const saveFavs = () => { try { localStorage.setItem('mehndi-favs', JSON.stringify([...favs])); } catch (e) {} };
+
+const pretty = s => s.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+const enc = p => p.split('/').map(encodeURIComponent).join('/');
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 1800); };
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- data ---------- */
+function fromPaths(paths) {
+  const base = `https://raw.githubusercontent.com/${CONFIG.user}/${CONFIG.repo}/${CONFIG.branch}/`;
+  const pre = CONFIG.folder.replace(/\/$/, '') + '/';
+  return paths.filter(p => IMG_RE.test(p) && p.startsWith(pre)).sort().map(p => {
+    const parts = p.slice(pre.length).split('/');
+    return { id: p, src: base + enc(p), name: pretty(parts[parts.length - 1]),
+             cat: parts.length > 1 ? pretty(parts[0]) : 'Other' };
+  });
+}
+
+async function loadFromGitHub() {
+  if (CONFIG.manifest) {
+    try {
+      const r = await fetch(CONFIG.manifest, { cache: 'no-cache' });
+      if (r.ok) { const list = await r.json(); if (Array.isArray(list) && list.length) return fromPaths(list); }
+    } catch (e) {}
+  }
+  // Live folder listing. The saved copy + ETag lets GitHub answer "304 unchanged",
+  // which does not count against the rate limit, so frequent reloads are fine.
+  const key = `mehndi-tree-${CONFIG.user}/${CONFIG.repo}@${CONFIG.branch}`;
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) {}
+  const headers = saved && saved.etag ? { 'If-None-Match': saved.etag } : {};
+  const r = await fetch(`https://api.github.com/repos/${CONFIG.user}/${CONFIG.repo}/git/trees/${CONFIG.branch}?recursive=1`, { headers });
+  if (r.status === 304 && saved) return fromPaths(saved.paths);
+  if (!r.ok) {
+    if (saved && (r.status === 403 || r.status === 429)) return fromPaths(saved.paths); // rate limited: show last known list
+    throw new Error(r.status === 403 ? 'rate' : r.status === 404 ? 'notfound' : 'http');
+  }
+  const data = await r.json();
+  const paths = data.tree.filter(t => t.type === 'blob').map(t => t.path);
+  try { localStorage.setItem(key, JSON.stringify({ etag: r.headers.get('ETag'), paths })); } catch (e) {}
+  return fromPaths(paths);
+}
+
+function demoItems() {
+  const cats = ['Bridal', 'Arabic', 'Simple', 'Feet', 'Kids'], out = [];
+  const tints = ['#8a3b12', '#6b2a10', '#a04a1a', '#57310f'];
+  for (let i = 0; i < 25; i++) {
+    const h = [280, 360, 320, 420][i % 4], petals = 6 + (i % 5) * 2, col = tints[i % 4];
+    let g = '';
+    for (let k = 0; k < petals; k++) {
+      const a = k * 360 / petals;
+      g += `<g transform="rotate(${a} 150 ${h/2})"><path d="M150 ${h/2-20}C130 ${h/2-70} 170 ${h/2-90} 150 ${h/2-125}C130 ${h/2-90} 170 ${h/2-70} 150 ${h/2-20}Z"/><circle cx="150" cy="${h/2-140}" r="4"/></g>`;
+    }
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 ${h}"><rect width="300" height="${h}" fill="#e6c9a0"/><g fill="none" stroke="${col}" stroke-width="3">${g}<circle cx="150" cy="${h/2}" r="14" fill="${col}"/><circle cx="150" cy="${h/2}" r="30"/></g></svg>`;
+    out.push({ id: 'demo' + i, src: 'data:image/svg+xml,' + encodeURIComponent(svg),
+               name: `Sample design ${i + 1}`, cat: cats[i % cats.length] });
+  }
+  return out;
+}
+
+/* ---------- render ---------- */
+function heartSvg() { return '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/></svg>'; }
+
+function renderChips() {
+  const counts = {}; items.forEach(i => counts[i.cat] = (counts[i.cat] || 0) + 1);
+  const chips = [['All', items.length], ...Object.keys(counts).sort().map(c => [c, counts[c]]), ['Saved', favs.size]];
+  $('#chips').innerHTML = chips.map(([c, n]) =>
+    `<button class="chip" data-c="${esc(c)}" aria-pressed="${c === cat}">${esc(c)}<small>${n}</small></button>`).join('');
+}
+
+function render() {
+  const q = query.trim().toLowerCase();
+  view = items.filter(i => (cat === 'All' || (cat === 'Saved' ? favs.has(i.id) : i.cat === cat)) &&
+                           (!q || (i.name + ' ' + i.cat).toLowerCase().includes(q)));
+  $('#count').textContent = `${view.length} design${view.length === 1 ? '' : 's'}`;
+  const grid = $('#grid');
+  if (!view.length) {
+    grid.innerHTML = '';
+    $('#count').insertAdjacentHTML('afterend', '');
+    grid.innerHTML = `<div class="msg"><h2>Nothing here yet</h2><p>${cat === 'Saved' ? 'Tap the heart on any design to save it here.' : 'No designs match your search. Clear it or pick another style.'}</p><button class="btn" id="reset">Show all designs</button></div>`;
+    return;
+  }
+  grid.innerHTML = view.map((i, n) => `
+    <figure>
+      <button class="tile" data-n="${n}" aria-label="Open ${esc(i.name)}"><img src="${i.src}" alt="${esc(i.name)}" loading="lazy" decoding="async"></button>
+      <button class="heart" data-id="${esc(i.id)}" aria-pressed="${favs.has(i.id)}" aria-label="Save ${esc(i.name)}">${heartSvg()}</button>
+      <figcaption>${esc(i.name)}</figcaption>
+    </figure>`).join('');
+  grid.querySelectorAll('img').forEach(im => {
+    const done = () => im.classList.add('ok');
+    im.complete ? done() : (im.onload = done, im.onerror = () => { im.closest('figure').remove(); });
+  });
+}
+
+function toggleFav(id) {
+  favs.has(id) ? favs.delete(id) : favs.add(id);
+  saveFavs(); renderChips();
+  if (cat === 'Saved') render();
+  else document.querySelectorAll('.heart').forEach(h => h.setAttribute('aria-pressed', favs.has(h.dataset.id)));
+  syncLb();
+}
+
+/* ---------- lightbox ---------- */
+const lb = $('#lb');
+function openLb(n) {
+  cur = (n + view.length) % view.length;
+  const i = view[cur];
+  $('#lbImg').src = i.src; $('#lbImg').alt = i.name;
+  $('#lbTitle').textContent = i.name;
+  history.replaceState(null, '', '#p=' + encodeURIComponent(i.id));
+  syncLb();
+  if (!lb.open) lb.showModal();
+}
+function syncLb() {
+  if (cur < 0 || !view[cur]) return;
+  const on = favs.has(view[cur].id);
+  $('#lbSave').setAttribute('aria-pressed', on);
+  $('#lbSave').textContent = on ? 'Saved' : 'Save';
+}
+lb.addEventListener('close', () => { history.replaceState(null, '', location.pathname + location.search); });
+lb.addEventListener('click', e => { if (e.target === lb || e.target.id === 'stage') lb.close(); });
+$('#lbClose').onclick = () => lb.close();
+$('#prev').onclick = () => openLb(cur - 1);
+$('#next').onclick = () => openLb(cur + 1);
+$('#lbSave').onclick = () => toggleFav(view[cur].id);
+$('#lbShare').onclick = async () => {
+  const url = location.href;
+  try { await navigator.clipboard.writeText(url); toast('Link copied'); } catch (e) { toast('Copy failed. Copy the address bar instead.'); }
+};
+$('#lbDl').onclick = async () => {
+  const i = view[cur];
+  try {
+    const b = await (await fetch(i.src)).blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(b);
+    a.download = i.id.split('/').pop().replace(/^demo\d+$/, i.name + '.svg') || 'design';
+    a.click(); URL.revokeObjectURL(a.href);
+  } catch (e) { window.open(i.src, '_blank'); }
+};
+document.addEventListener('keydown', e => {
+  if (!lb.open) return;
+  if (e.key === 'ArrowLeft') openLb(cur - 1);
+  if (e.key === 'ArrowRight') openLb(cur + 1);
+});
+let sx = 0;
+$('#stage').addEventListener('touchstart', e => sx = e.changedTouches[0].clientX, { passive: true });
+$('#stage').addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - sx;
+  if (Math.abs(dx) > 50) openLb(cur + (dx < 0 ? 1 : -1));
+});
+
+/* ---------- events ---------- */
+$('#chips').onclick = e => { const b = e.target.closest('.chip'); if (!b) return; cat = b.dataset.c; renderChips(); render(); };
+$('#q').oninput = e => { query = e.target.value; render(); };
+$('#grid').onclick = e => {
+  const h = e.target.closest('.heart'), t = e.target.closest('.tile');
+  if (h) toggleFav(h.dataset.id);
+  else if (t) openLb(+t.dataset.n);
+  else if (e.target.id === 'reset') { cat = 'All'; query = ''; $('#q').value = ''; renderChips(); render(); }
+};
+
+/* ---------- start ---------- */
+async function init() {
+  $('#grid').innerHTML = '<div class="skel"></div>'.repeat(8);
+  try {
+    if (!CONFIG.user || !CONFIG.repo) { items = demoItems(); toast('Preview mode: add your GitHub details in CONFIG'); }
+    else items = await loadFromGitHub();
+  } catch (err) {
+    const why = { rate: 'GitHub is limiting requests from this network. Wait a few minutes and reload.',
+      notfound: 'GitHub could not find that repo or branch. Check user, repo and branch in CONFIG, and make sure the repo is public.',
+      http: 'GitHub did not respond as expected. Try again in a minute.' }[err.message] || 'Could not load the catalog. Check your connection and CONFIG.';
+    $('#grid').innerHTML = `<div class="msg"><h2>Catalog did not load</h2><p>${why}</p><button class="btn" onclick="location.reload()">Try again</button></div>`;
+    $('#count').textContent = '';
+    return;
+  }
+  if (!items.length) {
+    $('#grid').innerHTML = `<div class="msg"><h2>No photos found</h2><p>Add images to the “${esc(CONFIG.folder)}” folder in your repo, for example ${esc(CONFIG.folder)}/bridal/design-1.jpg.</p></div>`;
+    $('#count').textContent = ''; return;
+  }
+  renderChips(); render();
+  const m = location.hash.match(/^#p=(.+)$/);
+  if (m) { const id = decodeURIComponent(m[1]); const n = view.findIndex(i => i.id === id); if (n >= 0) openLb(n); }
+}
+init();
+</script>
+</body>
+</html>
