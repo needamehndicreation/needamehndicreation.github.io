@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mehndi Designs Catalog</title>
+<meta name="description" content="Browse mehndi designs by style and book your favourite.">
+<meta name="theme-color" content="#3F5A24">
+<meta property="og:title" content="Mehndi Designs Catalog">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Rozha+One&display=swap" rel="stylesheet">
@@ -22,6 +26,23 @@ body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.55 var(--
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--marigold);outline-offset:2px}
+
+/* nav + footer */
+.top{border-bottom:1px solid var(--line)}
+.top-in{max-width:1200px;margin:0 auto;padding:.9rem 1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.brand{font:400 1.3rem var(--display);color:var(--ink);text-decoration:none}
+.cta,.pill.primary{background:var(--marigold);color:var(--on-accent);border:0;border-radius:999px;padding:.5rem 1.2rem;
+  font-weight:600;text-decoration:none;white-space:nowrap}
+.cta:hover,.pill.primary:hover{filter:brightness(1.08)}
+.foot{border-top:1px solid var(--line);margin-top:2rem}
+.foot-in{max-width:1200px;margin:0 auto;padding:1.75rem 1.25rem;display:flex;flex-wrap:wrap;gap:.75rem 2rem;
+  justify-content:space-between;color:var(--muted);font-size:.95rem}
+.foot-in a{color:var(--ink);margin-left:1.25rem}
+.foot-in strong{color:var(--ink);font-weight:600}
+[hidden]{display:none!important}
+.skel{background:linear-gradient(90deg,var(--tile),var(--line),var(--tile));background-size:200% 100%;animation:sh 1.4s infinite linear}
+@keyframes sh{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.skel{animation:none}}
 
 /* hero */
 .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:2rem;align-items:center;
@@ -100,10 +121,15 @@ dialog::backdrop{background:rgba(12,16,8,.94)}
 </head>
 <body>
 
+<nav class="top"><div class="top-in">
+  <a class="brand" href="./" id="brand">Mehndi Studio</a>
+  <a class="cta" id="bookTop" target="_blank" rel="noopener" hidden>Book on WhatsApp</a>
+</div></nav>
+
 <header class="hero">
   <div>
     <h1>Mehndi designs</h1>
-    <p>Browse the collection by style, save your favourites, and open any design full screen.</p>
+    <p id="tagline">Browse the collection by style, save your favourites, and open any design full screen.</p>
   </div>
   <svg class="vine" viewBox="0 0 200 200" aria-hidden="true">
     <path pathLength="1" d="M20 192C20 125 105 142 100 82S62 30 112 16"/>
@@ -124,6 +150,11 @@ dialog::backdrop{background:rgba(12,16,8,.94)}
   <div class="grid" id="grid"></div>
 </main>
 
+<footer class="foot"><div class="foot-in">
+  <span>© <span id="year"></span> <strong id="fBrand"></strong>. All designs shown are original work.</span>
+  <span id="fLinks"></span>
+</div></footer>
+
 <dialog id="lb" aria-label="Design viewer">
   <div class="lb">
     <div class="lb-top">
@@ -138,6 +169,7 @@ dialog::backdrop{background:rgba(12,16,8,.94)}
     <div class="lb-bot">
       <button class="pill" id="lbSave" aria-pressed="false">Save</button>
       <button class="pill" id="lbDl">Download</button>
+      <a class="pill primary" id="lbBook" target="_blank" rel="noopener" hidden>Book this design</a>
       <button class="pill" id="lbShare">Copy link</button>
     </div>
   </div>
@@ -151,7 +183,14 @@ const CONFIG = {
   repo:   '',          // repository that holds the photos
   branch: 'main',
   folder: 'images',    // photos live in images/<style>/<photo>.jpg  (subfolders become styles)
-  manifest: ''         // leave empty: the page reads your folders live from GitHub on every reload.
+  manifest: '',        // leave empty: the page reads your folders live from GitHub on every reload.
+
+  // Your business details (all optional, empty ones are hidden)
+  brand:     'Your Mehndi Studio',
+  tagline:   'Bridal, Arabic and festive henna, designed by hand. Find a design you love and book it.',
+  whatsapp:  '',       // number with country code, no + or spaces, e.g. 919876543210
+  instagram: '',       // username only, e.g. yourstudio
+  email:     ''
 };
 /* ====================================================== */
 
@@ -271,6 +310,10 @@ function openLb(n) {
   $('#lbTitle').textContent = i.name;
   history.replaceState(null, '', '#p=' + encodeURIComponent(i.id));
   syncLb();
+  if (CONFIG.whatsapp) {
+    $('#lbBook').href = waLink(`Hi! I'd like to book this mehndi design: ${i.name} (${location.href})`);
+    $('#lbBook').hidden = false;
+  }
   if (!lb.open) lb.showModal();
 }
 function syncLb() {
@@ -322,7 +365,25 @@ $('#grid').onclick = e => {
 };
 
 /* ---------- start ---------- */
+const waLink = msg => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+
+function applyBrand() {
+  const b = CONFIG.brand || 'Mehndi Studio';
+  document.title = `${b} | Mehndi Designs`;
+  document.querySelector('meta[property="og:title"]').content = document.title;
+  $('#brand').textContent = b; $('#fBrand').textContent = b;
+  if (CONFIG.tagline) $('#tagline').textContent = CONFIG.tagline;
+  $('#year').textContent = new Date().getFullYear();
+  if (CONFIG.whatsapp) { $('#bookTop').href = waLink('Hi! I saw your mehndi catalog and would like to book.'); $('#bookTop').hidden = false; }
+  const links = [];
+  if (CONFIG.whatsapp) links.push(`<a href="${waLink('Hi!')}" target="_blank" rel="noopener">WhatsApp</a>`);
+  if (CONFIG.instagram) links.push(`<a href="https://instagram.com/${encodeURIComponent(CONFIG.instagram)}" target="_blank" rel="noopener">Instagram</a>`);
+  if (CONFIG.email) links.push(`<a href="mailto:${esc(CONFIG.email)}">Email</a>`);
+  $('#fLinks').innerHTML = links.join('');
+}
+
 async function init() {
+  applyBrand();
   $('#grid').innerHTML = '<div class="skel"></div>'.repeat(8);
   try {
     if (!CONFIG.user || !CONFIG.repo) { items = demoItems(); toast('Preview mode: add your GitHub details in CONFIG'); }
